@@ -10,7 +10,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "project1": "cd NestJS/projects/01-ts-basics && yarn dev",
-    "project2": "cd NestJS/projects/02-car-dealership && yarn start:dev"
+    "project2": "cd NestJS/projects/02-car-dealership && yarn start:dev",
+    "project3": "cd NestJS/projects/03-pokedex && yarn start:dev"
   },
   "dependencies": {
     "@nestjs/common": "^10.0.0",

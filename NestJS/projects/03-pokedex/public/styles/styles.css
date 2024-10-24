@@ -1,0 +1,22 @@
+@import url('https://fonts.googleapis.com/css2?family=Arima:wght@100..700&display=swap');
+
+
+*{
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: "Arima", system-ui;
+    font-optical-sizing: auto;
+    font-weight: 300;
+    font-style: normal;
+}
+
+h1{
+    font-weight: bolder;
+    font-size: clamp(2rem, 4vw, 8rem );
+}
+
+
+body{
+    background-color: lightgray ;
+}
