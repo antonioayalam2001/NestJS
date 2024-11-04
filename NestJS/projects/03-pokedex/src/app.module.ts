@@ -4,13 +4,18 @@ import { AppService } from './app.service';
 import { ServeStaticModule } from '@nestjs/serve-static';
 import { join } from 'path';
 import { PokemonModule } from './pokemon/pokemon.module';
+import { MongooseModule } from '@nestjs/mongoose';
+import { CommonModule } from './common/common.module';
 
 @Module({
   imports: [
     ServeStaticModule.forRoot({
       rootPath: join(__dirname,'..','public')
     }),
-    PokemonModule
+    //Referencia base de datos
+    MongooseModule.forRoot('mongodb://localhost:27017/pokedex'),
+    PokemonModule,
+    CommonModule
   ],
 })
 export class AppModule {}

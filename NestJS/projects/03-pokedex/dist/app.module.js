@@ -11,6 +11,8 @@ const common_1 = require("@nestjs/common");
 const serve_static_1 = require("@nestjs/serve-static");
 const path_1 = require("path");
 const pokemon_module_1 = require("./pokemon/pokemon.module");
+const mongoose_1 = require("@nestjs/mongoose");
+const common_module_1 = require("./common/common.module");
 let AppModule = class AppModule {
 };
 exports.AppModule = AppModule;
@@ -20,7 +22,9 @@ exports.AppModule = AppModule = __decorate([
             serve_static_1.ServeStaticModule.forRoot({
                 rootPath: (0, path_1.join)(__dirname, '..', 'public')
             }),
-            pokemon_module_1.PokemonModule
+            mongoose_1.MongooseModule.forRoot('mongodb://localhost:27017/pokedex'),
+            pokemon_module_1.PokemonModule,
+            common_module_1.CommonModule
         ],
     })
 ], AppModule);

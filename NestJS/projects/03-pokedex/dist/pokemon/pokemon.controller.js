@@ -17,6 +17,7 @@ const common_1 = require("@nestjs/common");
 const pokemon_service_1 = require("./pokemon.service");
 const create_pokemon_dto_1 = require("./dto/create-pokemon.dto");
 const update_pokemon_dto_1 = require("./dto/update-pokemon.dto");
+const parse_mongo_id_pipe_1 = require("../common/pipes/parse-mongo-id/parse-mongo-id.pipe");
 let PokemonController = class PokemonController {
     constructor(pokemonService) {
         this.pokemonService = pokemonService;
@@ -27,19 +28,23 @@ let PokemonController = class PokemonController {
     findAll() {
         return this.pokemonService.findAll();
     }
-    findOne(id) {
-        return this.pokemonService.findOne(+id);
+    findOne(searchTerm) {
+        return this.pokemonService.findOne(searchTerm);
     }
-    update(id, updatePokemonDto) {
-        return this.pokemonService.update(+id, updatePokemonDto);
+    update(term, updatePokemonDto) {
+        return this.pokemonService.update(term, updatePokemonDto);
     }
     remove(id) {
-        return this.pokemonService.remove(+id);
+        return this.pokemonService.remove(id);
+    }
+    removeAll() {
+        return this.pokemonService.removeAll();
     }
 };
 exports.PokemonController = PokemonController;
 __decorate([
     (0, common_1.Post)(),
+    (0, common_1.HttpCode)(common_1.HttpStatus.CREATED),
     __param(0, (0, common_1.Body)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [create_pokemon_dto_1.CreatePokemonDto]),
@@ -52,15 +57,15 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], PokemonController.prototype, "findAll", null);
 __decorate([
-    (0, common_1.Get)(':id'),
-    __param(0, (0, common_1.Param)('id')),
+    (0, common_1.Get)(':searchTerm'),
+    __param(0, (0, common_1.Param)('searchTerm')),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String]),
     __metadata("design:returntype", void 0)
 ], PokemonController.prototype, "findOne", null);
 __decorate([
-    (0, common_1.Patch)(':id'),
-    __param(0, (0, common_1.Param)('id')),
+    (0, common_1.Patch)(':term'),
+    __param(0, (0, common_1.Param)('term')),
     __param(1, (0, common_1.Body)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String, update_pokemon_dto_1.UpdatePokemonDto]),
@@ -68,11 +73,17 @@ __decorate([
 ], PokemonController.prototype, "update", null);
 __decorate([
     (0, common_1.Delete)(':id'),
-    __param(0, (0, common_1.Param)('id')),
+    __param(0, (0, common_1.Param)('id', parse_mongo_id_pipe_1.ParseMongoIdPipe)),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String]),
     __metadata("design:returntype", void 0)
 ], PokemonController.prototype, "remove", null);
+__decorate([
+    (0, common_1.Delete)(''),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", []),
+    __metadata("design:returntype", void 0)
+], PokemonController.prototype, "removeAll", null);
 exports.PokemonController = PokemonController = __decorate([
     (0, common_1.Controller)('pokemon'),
     __metadata("design:paramtypes", [pokemon_service_1.PokemonService])
