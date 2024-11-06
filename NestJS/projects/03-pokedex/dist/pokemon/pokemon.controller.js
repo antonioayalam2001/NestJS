@@ -14,10 +14,11 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.PokemonController = void 0;
 const common_1 = require("@nestjs/common");
-const pokemon_service_1 = require("./pokemon.service");
+const parse_mongo_id_pipe_1 = require("../common/pipes/parse-mongo-id/parse-mongo-id.pipe");
 const create_pokemon_dto_1 = require("./dto/create-pokemon.dto");
 const update_pokemon_dto_1 = require("./dto/update-pokemon.dto");
-const parse_mongo_id_pipe_1 = require("../common/pipes/parse-mongo-id/parse-mongo-id.pipe");
+const pokemon_service_1 = require("./pokemon.service");
+const pokemon_query_dto_1 = require("../common/dto/pokemon-query.dto");
 let PokemonController = class PokemonController {
     constructor(pokemonService) {
         this.pokemonService = pokemonService;
@@ -27,6 +28,12 @@ let PokemonController = class PokemonController {
     }
     findAll() {
         return this.pokemonService.findAll();
+    }
+    findAllPaginated(query) {
+        return this.pokemonService.findAllPaginated(query);
+    }
+    fillPokemons() {
+        return this.pokemonService.fillDatabase();
     }
     findOne(searchTerm) {
         return this.pokemonService.findOne(searchTerm);
@@ -56,6 +63,19 @@ __decorate([
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", void 0)
 ], PokemonController.prototype, "findAll", null);
+__decorate([
+    (0, common_1.Get)('paginated'),
+    __param(0, (0, common_1.Query)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [pokemon_query_dto_1.PokemonQueryDto]),
+    __metadata("design:returntype", void 0)
+], PokemonController.prototype, "findAllPaginated", null);
+__decorate([
+    (0, common_1.Get)('/seed'),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", []),
+    __metadata("design:returntype", void 0)
+], PokemonController.prototype, "fillPokemons", null);
 __decorate([
     (0, common_1.Get)(':searchTerm'),
     __param(0, (0, common_1.Param)('searchTerm')),

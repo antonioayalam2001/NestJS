@@ -12,6 +12,7 @@ const pokemon_service_1 = require("./pokemon.service");
 const pokemon_controller_1 = require("./pokemon.controller");
 const mongoose_1 = require("@nestjs/mongoose");
 const pokemon_entity_1 = require("./entities/pokemon.entity");
+const config_1 = require("@nestjs/config");
 let PokemonModule = class PokemonModule {
 };
 exports.PokemonModule = PokemonModule;
@@ -25,8 +26,10 @@ exports.PokemonModule = PokemonModule = __decorate([
                     name: pokemon_entity_1.Pokemon.name,
                     schema: pokemon_entity_1.PokemonSchema
                 }
-            ])
-        ]
+            ]),
+            config_1.ConfigModule
+        ],
+        exports: [mongoose_1.MongooseModule]
     })
 ], PokemonModule);
 //# sourceMappingURL=pokemon.module.js.map

@@ -17,9 +17,12 @@ const common_1 = require("@nestjs/common");
 const mongoose_1 = require("@nestjs/mongoose");
 const mongoose_2 = require("mongoose");
 const pokemon_entity_1 = require("./entities/pokemon.entity");
+const config_1 = require("@nestjs/config");
 let PokemonService = class PokemonService {
-    constructor(pokemonModel) {
+    constructor(pokemonModel, envConfigService) {
         this.pokemonModel = pokemonModel;
+        this.envConfigService = envConfigService;
+        this.DEFAULT_LIMIT = this.envConfigService.get('defaultLimit');
     }
     async create(createPokemonDto) {
         createPokemonDto.name = createPokemonDto.name.toLowerCase();
@@ -32,7 +35,12 @@ let PokemonService = class PokemonService {
         }
     }
     async findAll() {
-        const allPokemons = await this.pokemonModel.find();
+        const allPokemons = await this.pokemonModel.find({});
+        return allPokemons;
+    }
+    async findAllPaginated(paginationDTO) {
+        const { limit = this.DEFAULT_LIMIT, offset = 0, sorted = false } = paginationDTO;
+        const allPokemons = await this.pokemonModel.find({}).skip(offset).limit(limit).sort({ no: sorted ? 1 : -1 });
         return allPokemons;
     }
     async findOne(searchTerm) {
@@ -40,15 +48,12 @@ let PokemonService = class PokemonService {
             let pokemon;
             if (!isNaN(+searchTerm)) {
                 pokemon = await this.pokemonModel.findOne({ no: +searchTerm });
-                console.log('pokemon number');
             }
             if ((0, mongoose_2.isValidObjectId)(searchTerm)) {
                 pokemon = await this.pokemonModel.findById(searchTerm);
-                console.log('pokemon mongo');
             }
             if (!pokemon) {
                 pokemon = await this.pokemonModel.findOne({ name: searchTerm.toLowerCase() });
-                console.log('pokemon string');
             }
             if (!pokemon) {
                 throw new common_1.NotFoundException('Pokemon not found');
@@ -87,8 +92,9 @@ let PokemonService = class PokemonService {
         await this.pokemonModel.deleteMany({});
         return 'All pokemons have been removed';
     }
+    async fillDatabase() {
+    }
     handleException(error) {
-        console.log(error);
         if (error.code === 11000) {
             throw new common_1.BadRequestException(`The value you're trying to update already exists in DB ${JSON.stringify(error.keyValue)}`);
         }
@@ -99,6 +105,7 @@ exports.PokemonService = PokemonService;
 exports.PokemonService = PokemonService = __decorate([
     (0, common_1.Injectable)(),
     __param(0, (0, mongoose_1.InjectModel)(pokemon_entity_1.Pokemon.name)),
-    __metadata("design:paramtypes", [mongoose_2.Model])
+    __metadata("design:paramtypes", [mongoose_2.Model,
+        config_1.ConfigService])
 ], PokemonService);
 //# sourceMappingURL=pokemon.service.js.map
