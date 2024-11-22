@@ -87,7 +87,7 @@ export class PokemonService {
     }
   }
 
-  async remove(id: string) {
+  async remove(id: string): Promise<{ deletedCount?: number }> {
     const result = await this.pokemonModel.deleteOne({ _id: id })
     console.log(result);
 
