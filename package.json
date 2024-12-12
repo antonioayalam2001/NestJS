@@ -8,7 +8,9 @@
     "./NestJS/projects/02-car-dealership",
     "./NestJS/projects/03-pokedex",
     "./NestJS/projects/04-tunas-shop",
-    "./NestJS/microservices/product-microservice"
+    "./NestJS/microservices/product-microservice",
+    "./NestJS/microservices/client-gateway",
+    "./NestJS/microservices/orders-microservice"
   ],
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -16,7 +18,9 @@
     "project2": "cd NestJS/projects/02-car-dealership && yarn start:dev",
     "project3": "cd NestJS/projects/03-pokedex && yarn start:dev",
     "project4": "cd NestJS/projects/04-tunas-shop && yarn start:dev",
-    "micro1": "cd NestJS/microservices/product-microservice && yarn start:dev"
+    "micro-product": "cd NestJS/microservices/product-microservice && yarn start:dev",
+    "micro-client-g": "cd NestJS/microservices/client-gateway && yarn start:dev",
+    "micro-orders": "cd NestJS/microservices/orders-microservice && yarn start:dev"
   },
   "dependencies": {
     "@nestjs/common": "^10.0.0",
